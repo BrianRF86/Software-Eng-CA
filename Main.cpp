@@ -29,7 +29,27 @@ camera.zoom = 1.0f;
         delta = Vector2Scale(delta, -1.0f/camera.zoom);
         camera.target = Vector2Add(camera.target, delta);
         }
+        // Zoom function on mouse wheel
+        float wheel = GetMouseWheelMove();
+        if (wheel != 0)
+        {
+            //World point is at mouse position.
+            Vector2 mouseWorldPos = GetScreenToWorld2D(GetMousePosition(), camera);
 
+            //Set the offset to where the mouse is
+            camera.offset = GetMousePosition();
+
+         // Set the target to match, so that the camera maps the world space point 
+        // under the cursor to the screen space point under the cursor at any zoom
+            camera.target = mouseWorldPos;
+
+        // Zoom increase
+        const float zoomIncrease = 0.125f;
+
+        camera.zoom += (wheel*zoomIncrease);
+        if(camera.zoom < zoomIncrease) camera.zoom = zoomIncrease;
+
+        }
 
        
 
