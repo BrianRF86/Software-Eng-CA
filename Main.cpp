@@ -57,8 +57,12 @@ camera.zoom = 1.0f;
         BeginDrawing();
         // Clear canvas to a specific color to avoid flicker
         ClearBackground(RAYWHITE);
+        // initiaing 2D mode
+         BeginMode2D(camera);
 
         // Here goes all the Game Logic
+        // Ending 2D mode
+        EndMode2D();
 
         // teardown Canvas
         EndDrawing();
