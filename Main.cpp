@@ -9,6 +9,13 @@ int main() {
     // Initialize the Window
     InitWindow(screenWidth, screenHeight, "Saving President Chump");
 
+
+//Background Texture 
+
+ Texture2D background = LoadTexture("resources/Stree.png");
+ //Making background image bigger than screen size
+ background.width = screenWidth*2;
+
 // Camera class - For zoom function from Raylib example  Copyright (c) 2022-2023 Jeffery Myers (@JeffM2501)
 
 Camera2D camera = { 0 };
@@ -55,12 +62,15 @@ camera.zoom = 1.0f;
 
         // Setup Canvas
         BeginDrawing();
+        
+        // Here goes all the Game Logic
         // Clear canvas to a specific color to avoid flicker
         ClearBackground(RAYWHITE);
         // initiaing 2D mode
          BeginMode2D(camera);
 
-        // Here goes all the Game Logic
+        DrawTextureEx(background);
+
         // Ending 2D mode
         EndMode2D();
 
