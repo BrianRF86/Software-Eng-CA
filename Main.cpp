@@ -1,5 +1,9 @@
 #include "raylib.h"
 
+// Added raymath to resolve vector errors
+
+#include "raymath.h"
+
 int main() {
     // Determine the Game Window Width and Height
     // changed screen size to match widescreen laptops
