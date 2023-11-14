@@ -4,8 +4,7 @@
 
 #include "raymath.h"
 
-//adding texture
-Texture2D background = LoadTexture("resources/Street.png");
+
 
 //Background Texture 
 //Fixing texture https://github.com/raysan5/raylib/blob/master/examples/textures/textures_background_scrolling.c
@@ -20,6 +19,8 @@ int main() {
     // Initialize the Window
     InitWindow(screenWidth, screenHeight, "Saving President Chump");
 
+//adding texture
+Texture2D background = LoadTexture("resources/Street.png");
 
 float scrollingBackground = 0.0f;
 
@@ -82,8 +83,8 @@ camera.zoom = 1.0f;
 
     
         //Fixing texture https://github.com/raysan5/raylib/blob/master/examples/textures/textures_background_scrolling.c
-        DrawTextureEx(background, (Vector2){ scrollingBackground, 20 }, 0.0f, 2.0f, WHITE);
-        DrawTextureEx(background, (Vector2){ background.width*2 + scrollingBackground, 20 }, 0.0f, 2.0f, WHITE);
+        DrawTextureEx(background, { scrollingBackground, 20 }, 0.0f, 2.0f, WHITE);
+        DrawTextureEx(background, { background.width*2 + scrollingBackground, 20 }, 0.0f, 2.0f, WHITE);
 
 
         // Ending 2D mode
