@@ -4,6 +4,13 @@
 
 #include "raymath.h"
 
+//adding texture
+Texture2D background = LoadTexture("resources/Street.png");
+
+//Background Texture 
+//Fixing texture https://github.com/raysan5/raylib/blob/master/examples/textures/textures_background_scrolling.c
+
+
 int main() {
     // Determine the Game Window Width and Height
     // changed screen size to match widescreen laptops
@@ -14,13 +21,9 @@ int main() {
     InitWindow(screenWidth, screenHeight, "Saving President Chump");
 
 
-//Background Texture 
+float scrollingBackground = 0.0f;
 
- Texture2D background = LoadTexture("resources/Stree.png");
- //Making background image bigger than screen size
- background.width = screenWidth*2;
-
-// Camera class - For zoom function from Raylib example  Copyright (c) 2022-2023 Jeffery Myers (@JeffM2501)
+// Camera class - For zoom function from Raylib example  Copyright (c) 2022-2023 Jeffery Myers (@JeffM2501) https://github.com/raysan5/raylib/blob/master/examples/core/core_2d_camera_mouse_zoom.c
 
 Camera2D camera = { 0 };
 camera.zoom = 1.0f;
@@ -33,6 +36,10 @@ camera.zoom = 1.0f;
     while (!WindowShouldClose() /*WindowShouldClose returns true if esc is clicked and closes the window*/) {
 
         //Updates
+        //Fixing texture https://github.com/raysan5/raylib/blob/master/examples/textures/textures_background_scrolling.c
+        scrollingBackground -= 0.1f;
+
+
 
         //Map navigation on mouse click right 
         if(IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
@@ -73,7 +80,11 @@ camera.zoom = 1.0f;
         // initiaing 2D mode
          BeginMode2D(camera);
 
-        DrawTextureEx(background);
+    
+        //Fixing texture https://github.com/raysan5/raylib/blob/master/examples/textures/textures_background_scrolling.c
+        DrawTextureEx(background, (Vector2){ scrollingBackground, 20 }, 0.0f, 2.0f, WHITE);
+        DrawTextureEx(background, (Vector2){ background.width*2 + scrollingBackground, 20 }, 0.0f, 2.0f, WHITE);
+
 
         // Ending 2D mode
         EndMode2D();
@@ -81,6 +92,10 @@ camera.zoom = 1.0f;
         // teardown Canvas
         EndDrawing();
     }
+        //De-Initialization
+//Fixing texture https://github.com/raysan5/raylib/blob/master/examples/textures/textures_background_scrolling.c
+UnloadTexture(background); 
+
     CloseWindow();
     return 0;
 }
