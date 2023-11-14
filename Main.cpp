@@ -1,6 +1,6 @@
 #include "raylib.h"
 
-// Added raymath to resolve vector errors
+// Added raymath to resolve vector errors from https://github.com/raysan5/raylib/blob/master/src/raymath.h
 
 #include "raymath.h"
 
