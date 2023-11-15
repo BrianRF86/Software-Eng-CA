@@ -4,11 +4,7 @@
 
 #include "raymath.h"
 
-
-
-//Background Texture 
 //Fixing texture https://github.com/raysan5/raylib/blob/master/examples/textures/textures_background_scrolling.c
-
 
 int main() {
     // Determine the Game Window Width and Height
@@ -19,8 +15,12 @@ int main() {
     // Initialize the Window
     InitWindow(screenWidth, screenHeight, "Saving President Chump");
 
-//adding texture
+//Background Texture
 Texture2D background = LoadTexture("resources/Street.png");
+
+//Crosshair texture
+Texture2D crosshair = LoadTexture("resources/crosshair.png");
+
 
 float scrollingBackground = 0.0f;
 
@@ -40,8 +40,6 @@ camera.zoom = 1.0f;
         //Fixing texture https://github.com/raysan5/raylib/blob/master/examples/textures/textures_background_scrolling.c
         scrollingBackground -= 0.1f;
 
-
-
         //Map navigation on mouse click right 
         if(IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
         { Vector2 delta = GetMouseDelta();
@@ -52,6 +50,7 @@ camera.zoom = 1.0f;
         float wheel = GetMouseWheelMove();
         if (wheel != 0)
         {
+            
             //World point is at mouse position.
             Vector2 mouseWorldPos = GetScreenToWorld2D(GetMousePosition(), camera);
 
@@ -70,7 +69,10 @@ camera.zoom = 1.0f;
 
         }
 
-       
+       //crosshair class https://github.com/BrianRF86/Git-hub-project/commit/ae34663f72f7e8ede5a7a12281c4a4ca0339929c
+
+
+        
 
         // Setup Canvas
         BeginDrawing();
@@ -86,6 +88,7 @@ camera.zoom = 1.0f;
         DrawTextureEx(background, { scrollingBackground, 20 }, 0.0f, 2.0f, WHITE);
         DrawTextureEx(background, { background.width*2 + scrollingBackground, 20 }, 0.0f, 2.0f, WHITE);
 
+        DrawTexture(crosshair,0.0f,2.0f,WHITE);
 
         // Ending 2D mode
         EndMode2D();
