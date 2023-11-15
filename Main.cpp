@@ -6,6 +6,16 @@
 
 //Fixing texture https://github.com/raysan5/raylib/blob/master/examples/textures/textures_background_scrolling.c
 
+//objects
+
+struct crosshair{
+
+Texture2D texture;
+Rectangle circ;
+Vector2 position;
+
+};
+
 int main() {
     // Determine the Game Window Width and Height
     // changed screen size to match widescreen laptops
@@ -26,7 +36,7 @@ float scrollingBackground = 0.0f;
 
 // Camera class - For zoom function from Raylib example  Copyright (c) 2022-2023 Jeffery Myers (@JeffM2501) https://github.com/raysan5/raylib/blob/master/examples/core/core_2d_camera_mouse_zoom.c
 
-Camera2D camera = { 0 };
+Camera2D camera = { 0 }; 
 camera.zoom = 1.0f;
 
     // Setting the Frames Per Second
@@ -39,6 +49,12 @@ camera.zoom = 1.0f;
         //Updates
         //Fixing texture https://github.com/raysan5/raylib/blob/master/examples/textures/textures_background_scrolling.c
         scrollingBackground -= 0.1f;
+
+        crosshair cursor = (crosshair){
+            .texture = crosshair,
+            .position = GetMousePosition (),
+            .circ = {0.0f, 0.0f, 64.0f, 64.f},
+        };
 
         //Map navigation on mouse click right 
         if(IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
@@ -68,12 +84,7 @@ camera.zoom = 1.0f;
         if(camera.zoom < zoomIncrease) camera.zoom = zoomIncrease;
 
         }
-
-       //crosshair class https://github.com/BrianRF86/Git-hub-project/commit/ae34663f72f7e8ede5a7a12281c4a4ca0339929c
-
-
         
-
         // Setup Canvas
         BeginDrawing();
         
@@ -99,6 +110,7 @@ camera.zoom = 1.0f;
         //De-Initialization
 //Fixing texture https://github.com/raysan5/raylib/blob/master/examples/textures/textures_background_scrolling.c
 UnloadTexture(background); 
+UnloadTexture(crosshair);
 
     CloseWindow();
     return 0;
