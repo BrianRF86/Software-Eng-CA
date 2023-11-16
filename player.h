@@ -23,12 +23,14 @@ Vector2 target;
 
 player () {
 
-height = GetScreenHeight ()/ 4;
-width = GetScreenWidth ()/ 4;
+height = GetScreenHeight () / 4;
+width = GetScreenWidth () / 4;
 
+// https://www.raylib.com/examples/core/loader.html?name=core_input_mouse
+position = GetMousePosition();
+ 
 }
-
-void Limitmovement(){
+void LimitMovement () {
 if(y <= 0)
     {
         y = 0;
@@ -51,6 +53,7 @@ if(x + width >= GetScreenWidth())
 
 } 
 
-void Loadtexture(player);
- 
+
+
+
  };
