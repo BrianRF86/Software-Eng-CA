@@ -4,30 +4,27 @@
 
 #include "raymath.h"
 
-//trying to set screen width & height to avoid zooming out of map.
-
-const int screenWidth = 832;
-const int screenHeight = 430;
 
 //objects
 
 // Trying struct instead of class https://www.youtube.com/watch?v=eW05rq1Nz2I&t=5s
-
+// updating struct as per Lecturer's example: https://github.com/naoisecollins/2023MSc-SoftwareEngineering1-Class-Workspace/commit/747a80cc5ce8c3abccc23f8f5545c3e809b61d46
 struct player{
-
-protected:
 
 float x,y;
 float width, height;
-
+float speed;
 //// For zoom function from Raylib example  Copyright (c) 2022-2023 Jeffery Myers (@JeffM2501) https://github.com/raysan5/raylib/blob/master/examples/core/core_2d_camera_mouse_zoom.c
 float zoom;
+Texture2D texture;
+Vector2 position;
 
-//Setting player details
-player.width = screenWidth/4;
-player.height = screenHeight/4;
-player.x = screenWidth/2;
-player.y = screenHeight/2;
+//adding vectors for offset and target to see if fixes errors.
+Vector2 offset;
+Vector2 target;
+
+
+//defining 
 
 // Preventing the player from leaving the screen. 
 
@@ -73,7 +70,11 @@ int main() {
 //Background Texture
 Texture2D background = LoadTexture("resources/Street.png");
 
-
+//https://github.com/naoisecollins/2023MSc-SoftwareEngineering1-Class-Workspace/commit/747a80cc5ce8c3abccc23f8f5545c3e809b61d46
+struct player player;
+player.position = GetMousePosition ();
+player.texture = LoadTexture("resources/crosshair.png");
+player.speed = 4.0f;
 
     // Setting the Frames Per Second
     SetTargetFPS(60);
@@ -88,7 +89,7 @@ Texture2D background = LoadTexture("resources/Street.png");
 
         //Updates
 
-     // Player movement & Map navigation on mouse click right --- moving back to INT section
+     // Player movement & Map navigation on mouse click right --- moving back to INT section https://github.com/raysan5/raylib/blob/master/examples/core/core_2d_camera_mouse_zoom.c
 
 
 if(IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
