@@ -4,15 +4,24 @@
 
 #include "raymath.h"
 
+//trying to set screen width & height to avoid zooming out of map.
 
+const int screenWidth = 832;
+const int screenHeight = 430;
 
 //objects
 
-// Preventing the player from leaving the screen. 
+// Trying struct instead of class https://www.youtube.com/watch?v=eW05rq1Nz2I&t=5s
 
-class player{
+struct player{
 
 protected:
+
+float x,y;
+float width, height;
+
+//// For zoom function from Raylib example  Copyright (c) 2022-2023 Jeffery Myers (@JeffM2501) https://github.com/raysan5/raylib/blob/master/examples/core/core_2d_camera_mouse_zoom.c
+float zoom;
 
 //Setting player details
 player.width = screenWidth/4;
@@ -44,48 +53,11 @@ if(x + width >= GetScreenWidth())
 }
 
 }
-
-
-    float x,y;
-    float width, height;
     
 
-void Loadtexture(Player);
-
-// Player movement & Map navigation on mouse click right 
-
-
-if(IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
-        { Vector2 delta = GetMouseDelta();
-        delta = Vector2Scale(delta, -1.0f/player.zoom);
-        player.target = Vector2Add(player.target, delta);
-        }
-        // Zoom function on mouse wheel
-        float wheel = GetMouseWheelMove();
-        if (wheel != 0)
-        {
-
-// For zoom function from Raylib example  Copyright (c) 2022-2023 Jeffery Myers (@JeffM2501) https://github.com/raysan5/raylib/blob/master/examples/core/core_2d_camera_mouse_zoom.c
-
-Camera2D player = { 0 }; 
-Player.zoom = 1.0f;
-
-     //World point is at mouse position.
-
-            Vector2 mouseWorldPos = GetScreenToWorld2D(GetMousePosition(), Player);
-           
-
-            //Set the offset to where the mouse is
-            Player.offset = GetMousePosition();
-
-         // Set the target to match, so that the camera maps the world space point 
-        // under the cursor to the screen space point under the cursor at any zoom
-            Player.target = mouseWorldPos;
-    
+void Loadtexture(player);
 
 };
-
-player player;
 
 int main() {
     // Determine the Game Window Width and Height
@@ -116,14 +88,44 @@ Texture2D background = LoadTexture("resources/Street.png");
 
         //Updates
 
-     
+     // Player movement & Map navigation on mouse click right --- moving back to INT section
+
+
+if(IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
+        { Vector2 delta = GetMouseDelta();
+        delta = Vector2Scale(delta, -1.0f/player.zoom);
+        player.target = Vector2Add(player.target, delta);
+        }
+        // Zoom function on mouse wheel
+        float wheel = GetMouseWheelMove();
+        if (wheel != 0)
+        {
+
+
+
+Camera2D player = { 0 }; 
+player.zoom = 1.0f;
+
+     //World point is at mouse position.
+
+            Vector2 mouseWorldPos = GetScreenToWorld2D(GetMousePosition(), player);
+           
+
+            //Set the offset to where the mouse is
+            player.offset = GetMousePosition();
+
+         // Set the target to match, so that the camera maps the world space point 
+        // under the cursor to the screen space point under the cursor at any zoom
+            player.target = mouseWorldPos;
+    
+
          
        
         // Zoom increase
         const float zoomIncrease = 0.125f;
 
-        Player.zoom += (wheel*zoomIncrease);
-        if(Player.zoom < zoomIncrease) Player.zoom = zoomIncrease;
+        player.zoom += (wheel*zoomIncrease);
+        if(player.zoom < zoomIncrease) player.zoom = zoomIncrease;
 
         }
         
@@ -134,7 +136,7 @@ Texture2D background = LoadTexture("resources/Street.png");
         // Clear canvas to a specific color to avoid flicker
         ClearBackground(RAYWHITE);
         // initiaing 2D mode
-         BeginMode2D(Player);
+         BeginMode2D(player);
 
     
   
@@ -152,8 +154,9 @@ Texture2D background = LoadTexture("resources/Street.png");
         //De-Initialization
 //Fixing texture https://github.com/raysan5/raylib/blob/master/examples/textures/textures_background_scrolling.c
 UnloadTexture(background); 
-UnloadTexture(Player);
+UnloadTexture(player);
 
     CloseWindow();
     return 0;
 }
+
