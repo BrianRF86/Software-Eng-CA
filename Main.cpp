@@ -3,7 +3,7 @@
 // Added raymath to resolve vector errors from https://github.com/raysan5/raylib/blob/master/src/raymath.h
 
 #include "raymath.h"
-
+#include "player.h"
 
 //objects
 
@@ -28,31 +28,6 @@ Vector2 target;
 
 // Preventing the player from leaving the screen. 
 
-void Limitmovement(){
-if(y <= 0)
-    {
-        y = 0;
-    }
-
-if (y + height >= GetScreenHeight()) 
-    {
-        y = GetScreenHeight - height;
-    }
-
-if(x <=0)
-{
-    x = 0;
-}
-
-if(x + width >= GetScreenWidth())
-{
-    x = GetScreenWidth - width;
-}
-
-}
-    
-
-void Loadtexture(player);
 
 };
 
@@ -71,7 +46,7 @@ int main() {
 Texture2D background = LoadTexture("resources/Street.png");
 
 //https://github.com/naoisecollins/2023MSc-SoftwareEngineering1-Class-Workspace/commit/747a80cc5ce8c3abccc23f8f5545c3e809b61d46
-struct player player;
+
 player.position = GetMousePosition ();
 player.texture = LoadTexture("resources/crosshair.png");
 player.speed = 4.0f;
@@ -104,20 +79,20 @@ if(IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
 
 
 
-Camera2D player = { 0 }; 
+Camera2D Camera = { 0 }; 
 player.zoom = 1.0f;
 
      //World point is at mouse position.
 
-            Vector2 mouseWorldPos = GetScreenToWorld2D(GetMousePosition(), player);
+            Camera2D mouseWorldPos = GetScreenToWorld2D(GetMousePosition(), Camera);
            
 
             //Set the offset to where the mouse is
-            player.offset = GetMousePosition();
+            Camera.offset = GetMousePosition();
 
          // Set the target to match, so that the camera maps the world space point 
         // under the cursor to the screen space point under the cursor at any zoom
-            player.target = mouseWorldPos;
+            Camera.target = mouseWorldPos;
     
 
          
@@ -141,7 +116,7 @@ player.zoom = 1.0f;
 
     
   
-        Loadtexture(background,0.0f, 2.0f, WHITE);
+        LoadTexture(background,0.0f, 2.0f, WHITE);
         
 
        
