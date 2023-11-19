@@ -53,8 +53,15 @@ unsigned numFrames = 6;
             if (currentFrame > 5) currentFrame = 0;
 
             frameRec.x = (float)currentFrame*(float)playertex.width/6;
-        }
+        
+        // Stop walking animation if no button is pressed
 
+        } else if(!IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_LEFT) &&
+        !IsGamepadButtonDown(0, GAMEPAD_BUTTON_LEFT_FACE_RIGHT) &&
+        !IsGamepadButtonDown(0, GAMEPAD_BUTTON_LEFT_FACE_LEFT)) {
+        
+        framesCounter = 0;
+        }
 
         // Player movement
 
@@ -71,9 +78,12 @@ unsigned numFrames = 6;
 		} else {
 			playerVelocity.x = 0;
 		}
+
+        
 		bool playerMoving = playerVelocity.x != 0.0f || playerVelocity.y != 0.0f;
 
         playerPosition = Vector2Add(playerPosition, playerVelocity);
+
 
 
 
