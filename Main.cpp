@@ -4,15 +4,31 @@
 #include "raymath.h"
 
 
-#define MAX_FRAME_SPEED     15
-#define MIN_FRAME_SPEED      1
+
+// setting ground position https://www.youtube.com/watch?v=_JjPo8rE8a8&t=29s
+const int groundYpos = 600;
+const int jumpUpFrame = 3;
+const int jumpDownFrame = 4;
+const int footstepFrame1 = 1;
+const int footstepFrame2 = 4;
+
+// Ground boolean https://www.youtube.com/watch?v=_JjPo8rE8a8&t=29s
+
+bool isplayerOnGround(Vector2 *playerPosition){
+
+   if (playerPosition->y >= groundYpos){
+    return true;
+    } else {
+    return false;   
+    }
+    }
 
 
 int main() {
     // Determin the Game Window Width and Height
-    const int screenWidth = 800;
-    const int screenHeight = 450;
-
+    const int screenWidth = 1280;
+    const int screenHeight = 800;
+    const int gravity = 1;
     //Defining Player speed
 
     
@@ -27,10 +43,13 @@ unsigned numFrames = 6;
 	Rectangle frameRec = { 0.0f, 0.0f, (float)frameWidth, (float)playertex.height };
 	Vector2 playerPosition = {screenWidth / 2.0f, screenHeight / 2.0f};
     Vector2 playerVelocity = {0.0f,0.0f};
-	
-   int currentFrame = 0;   
-   int framesCounter = 0;
-   int framesSpeed = 8;
+    int playerSpeed = 5;
+    int currentFrame = 0;   
+    int framesCounter = 0;
+    int framesSpeed = 8;
+
+
+
 
     // Setting the Frames Per Second
     SetTargetFPS(60);
@@ -64,6 +83,11 @@ unsigned numFrames = 6;
         }
 
         // Player movement
+        // Jump & checking that player is on ground prior to jump https://www.youtube.com/watch?v=_JjPo8rE8a8&t=29s
+        if (isplayerOnGround(&playerPosition) && (IsKeyDown(KEY_UP)) || IsGamepadButtonDown(0, GAMEPAD_BUTTON_LEFT_FACE_RIGHT))
+        {
+            playerVelocity.y =-playerSpeed *4;
+        }
 
         if (IsKeyDown(KEY_RIGHT) || IsGamepadButtonDown(0, GAMEPAD_BUTTON_LEFT_FACE_RIGHT)) {
 			playerVelocity.x = framesSpeed;
@@ -79,11 +103,15 @@ unsigned numFrames = 6;
 			playerVelocity.x = 0;
 		}
 
-        
-		bool playerMoving = playerVelocity.x != 0.0f || playerVelocity.y != 0.0f;
-
+//https://www.youtube.com/watch?v=_JjPo8rE8a8&t=29s
         playerPosition = Vector2Add(playerPosition, playerVelocity);
+        if (isplayerOnGround(&playerPosition)){
+            playerVelocity.y = 0;
+            playerPosition.y = groundYpos;
+        } else {
 
+        playerVelocity.y += gravity;
+        }
 
 
 
