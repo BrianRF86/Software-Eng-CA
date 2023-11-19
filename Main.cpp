@@ -4,6 +4,10 @@
 #include "raymath.h"
 
 
+#define MAX_FRAME_SPEED     15
+#define MIN_FRAME_SPEED      1
+
+
 int main() {
     // Determin the Game Window Width and Height
     const int screenWidth = 800;
@@ -11,7 +15,7 @@ int main() {
 
     //Defining Player speed
 
-    const int playerSpeed = 6;
+    
     // Initialize the Window
     InitWindow(screenWidth, screenHeight, "Scarfy's dodgeball survival");
 
@@ -24,9 +28,9 @@ unsigned numFrames = 6;
 	Vector2 playerPosition = {screenWidth / 2.0f, screenHeight / 2.0f};
     Vector2 playerVelocity = {0.0f,0.0f};
 	
-	unsigned frameDelay = 5;
-	unsigned frameDelayCounter = 0;
-	unsigned frameIndex = 0;
+   int currentFrame = 0;   
+   int framesCounter = 0;
+   int framesSpeed = 8;
 
     // Setting the Frames Per Second
     SetTargetFPS(60);
@@ -36,15 +40,31 @@ unsigned numFrames = 6;
 
 
             //updates
+
+        //fix animation speed https://github.com/raysan5/raylib/blob/master/examples/textures/textures_sprite_anim.c
+
+  framesCounter++;
+
+        if (framesCounter >= (60/framesSpeed))
+        {
+            framesCounter = 0;
+            currentFrame++;
+
+            if (currentFrame > 5) currentFrame = 0;
+
+            frameRec.x = (float)currentFrame*(float)playertex.width/6;
+        }
+
+
         // Player movement
 
         if (IsKeyDown(KEY_RIGHT) || IsGamepadButtonDown(0, GAMEPAD_BUTTON_LEFT_FACE_RIGHT)) {
-			playerVelocity.x = playerSpeed;
+			playerVelocity.x = framesSpeed;
 			if(frameRec.width < 0) {
 				frameRec.width = -frameRec.width;
 			}
         } else if (IsKeyDown(KEY_LEFT) || IsGamepadButtonDown(0, GAMEPAD_BUTTON_LEFT_FACE_LEFT)) {
-			playerVelocity.x = -playerSpeed;
+			playerVelocity.x = -framesSpeed;
 			if(frameRec.width > 0) {
 				frameRec.width = -frameRec.width;
 			}
@@ -55,17 +75,7 @@ unsigned numFrames = 6;
 
         playerPosition = Vector2Add(playerPosition, playerVelocity);
 
-          	++frameDelayCounter;
-		if(frameDelayCounter > frameDelay) {
-			frameDelayCounter = 0;
-        }
-    
-    // fix player moving animation
-    if(playerMoving) {
-				++frameIndex;
-				frameIndex %= numFrames;
-				frameRec.x = (float) frameWidth * frameIndex;
-			}
+
 
         // Setup Canvas
         BeginDrawing();
