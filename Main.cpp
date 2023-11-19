@@ -6,7 +6,7 @@
 
 
 // setting ground position https://www.youtube.com/watch?v=_JjPo8rE8a8&t=29s
-const int groundYpos = 600;
+const int groundYpos = 650;
 const int jumpUpFrame = 3;
 const int jumpDownFrame = 4;
 const int footstepFrame1 = 1;
@@ -37,6 +37,7 @@ int main() {
 
 //https://www.youtube.com/watch?v=j0C4ox1gFxk&list=PLORJX3OiHbbMs9AFM5bzpNUychJm1raub
 
+Texture2D background = LoadTexture("resources/street.png");
 Texture2D playertex = LoadTexture("resources/scarfy3.png");
 unsigned numFrames = 6;
 	int frameWidth = playertex.width / numFrames;
@@ -120,7 +121,17 @@ unsigned numFrames = 6;
         // Clear canvas to a specific color to avoid flicker
         ClearBackground(RAYWHITE);
 
-       
+// stretching background to fit screen https://www.youtube.com/watch?time_continue=11&v=AKTLg1SWfG0&embeds_referring_euri=https%3A%2F%2Fwww.google.com%2F&source_ve_path=Mjg2NjY&feature=emb_logo &
+// https://stackoverflow.com/questions/75932497/trouble-drawing-texture-using-drawtexturepro-in-raylib-c-to-centralise-it
+       DrawTexturePro(
+    background,
+    (Rectangle){ 0.0f, 0.0f, (float)background.width, (float)background.height },
+    (Rectangle){ 0.0f, 0.0f, (float)screenWidth, (float)screenHeight },
+    (Vector2){ 0.0f, 0.0f },
+    0.0f,
+    WHITE);
+
+
         DrawTextureRec(playertex, frameRec, playerPosition,WHITE);
         // Here goes all the Game Logic
 
