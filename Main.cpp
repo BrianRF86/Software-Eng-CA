@@ -11,7 +11,7 @@ int main() {
 
     //Defining Player speed
 
-    const int playerSpeed = 5;
+    const int playerSpeed = 6;
     // Initialize the Window
     InitWindow(screenWidth, screenHeight, "Scarfy's dodgeball survival");
 
@@ -60,6 +60,12 @@ unsigned numFrames = 6;
 			frameDelayCounter = 0;
         }
     
+    // fix player moving animation
+    if(playerMoving) {
+				++frameIndex;
+				frameIndex %= numFrames;
+				frameRec.x = (float) frameWidth * frameIndex;
+			}
 
         // Setup Canvas
         BeginDrawing();
